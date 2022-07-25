@@ -6,7 +6,7 @@ RUN yarn
 RUN yarn build
 
 RUN yarn global add pkg
-RUN pkg /app/dist/index.js --out-path /app/shoppiserver --debug -t node16-linux
+RUN pkg /app/dist/index.js --out-path /app/shoppiserver -t node16-linux
 
 
 
