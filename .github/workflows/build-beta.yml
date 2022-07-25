@@ -42,5 +42,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.extract_branch.outputs.branch }}
+          tags: ${{ steps.meta.outputs.tags }}:${{ steps.extract_branch.outputs.branch }}
           labels: ${{ steps.meta.outputs.labels }}
