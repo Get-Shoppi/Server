@@ -18,6 +18,7 @@ RUN apk add --no-cache bash
 COPY --from=builder /app/shoppiserver /app/shoppiserver
 RUN npm -g install prisma
 COPY --from=builder /app/prisma /app/prisma
+RUN prisma generate --schema=/app/prisma/schema.prisma
 COPY start.sh /app
 EXPOSE 3003
 
