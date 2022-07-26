@@ -1,13 +1,19 @@
 import nodemailer from "nodemailer";
 
+const SMTP_HOST = process.env.SMTP_HOST as string;
+const SMTP_PORT = process.env.SMTP_PORT as string;
+const SMTP_USER = process.env.SMTP_USER as string;
+const SMTP_PASSWORD = process.env.SMTP_PASSWORD as string;
+const SMTP_FROM = process.env.SMTP_FROM as string;
+
 function getTransport() {
   return nodemailer.createTransport({
-    host: "email-smtp.eu-central-1.amazonaws.com",
+    host: SMTP_HOST,
     secure: true,
-    port: 465,
+    port: Number(SMTP_PORT),
     auth: {
-      user: "AKIA32AKQPJHIX6ECDNH",
-      pass: "BKt+fkocX+gHw5ChzPb+jXjKGHkNhBn2UoSs6BjtIaL3",
+      user: SMTP_USER,
+      pass: SMTP_PASSWORD,
     },
   });
 }
@@ -17,7 +23,7 @@ export async function sendLoginMail(email: string, token: string) {
   const transport = getTransport();
   await transport.sendMail({
     to: email,
-    from: "noreply@mail.radmacher.club",
+    from: SMTP_FROM,
     subject: "Shoppi Login",
     text: `Please click on the following link to login: \n
     ${webUrl}/login?token=${token}&email=${email}`,
