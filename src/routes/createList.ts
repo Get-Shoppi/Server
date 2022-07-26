@@ -19,6 +19,7 @@ router.post("/v1/create-list", async (req, res) => {
 
   const listUser = await prisma.userOnList.create({
     data: {
+      accepted: true,
       user: {
         connect: {
           id: req.userId,
