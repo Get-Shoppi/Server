@@ -4,4 +4,4 @@
 npx prisma migrate deploy --schema=/app/prisma/schema.prisma
 
 # Start the server
-/app/shoppiserver/index
+node /app/dist/index.js
