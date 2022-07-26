@@ -6,15 +6,14 @@ RUN yarn
 RUN yarn build
 
 RUN yarn global add pkg
-RUN pkg /app/dist/index.js --out-path /app/shoppiserver -t node16-linux
+RUN pkg /app/dist/index.js --out-path /app/shoppiserver -t node16-alpine-x64
 
 
 
-FROM node:16-slim
+FROM node:16-alpine
 
 WORKDIR /app
-RUN apt update -y
-RUN apt-get install openssl -y
+RUN apk add --no-cache bash
 
 COPY --from=builder /app/shoppiserver /app/shoppiserver
 RUN npm -g install prisma
