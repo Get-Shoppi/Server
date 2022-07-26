@@ -1,5 +1,7 @@
 FROM node:16-buster as builder
 
+#Disable husky
+ENV HUSKY=0
 WORKDIR /app
 COPY . /app
 RUN yarn
@@ -7,6 +9,8 @@ RUN yarn build
 
 FROM node:16-alpine
 
+#Disable husky
+ENV HUSKY=0
 ENV NODE_ENV=production
 WORKDIR /app
 RUN apk add --no-cache bash
