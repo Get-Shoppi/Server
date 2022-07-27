@@ -45,4 +45,9 @@ app.use(AcceptInviteRoute);
 
 app.listen(3003, () => {
   console.log("Server started on port 3003");
+  if (process.env.NODE_ENV === "DEV") {
+    console.warn("====================== WARNING ======================");
+    console.warn("Running in DEV mode, rate limits are not secure.");
+    console.warn("====================== WARNING ======================");
+  }
 });
