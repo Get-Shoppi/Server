@@ -4,11 +4,9 @@ import { authMiddleware } from "../utils/authUtil";
 
 const router = Router();
 
-router.use(authMiddleware);
-
 const prisma = new PrismaClient();
 
-router.post("/v1/add-item-to-list", async (req, res) => {
+router.post("/v1/add-item-to-list", authMiddleware, async (req, res) => {
   const { item, listId } = req.body;
 
   if (!item || !listId) {

@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl"]
 }
 
@@ -12,12 +12,14 @@ datasource db {
 }
 
 model User {
-  id         String       @id @default(cuid())
-  name       String
-  email      String       @unique
-  lastEmail  DateTime     @default(now())
-  UserOnList UserOnList[]
-  UserTokens UserToken[]
+  id            String       @id @default(cuid())
+  name          String
+  email         String       @unique
+  lastEmail     DateTime     @default(now())
+  acceptInvites Boolean      @default(false)
+  UserOnList    UserOnList[]
+  UserTokens    UserToken[]
+  invitesSend   ListInvite[]
 }
 
 model UserToken {
@@ -34,14 +36,24 @@ model List {
   items      String[]
   updatedAt  DateTime     @updatedAt
   UserOnList UserOnList[]
+  invites    ListInvite[]
+}
+
+model ListInvite {
+  id        String   @id @default(cuid())
+  inviter   User     @relation(fields: [inviterId], references: [id])
+  inviterId String
+  inviteeId String
+  list      List     @relation(fields: [listId], references: [id])
+  listId    String
+  createdAt DateTime @default(now())
 }
 
 model UserOnList {
-  user     User    @relation(fields: [userId], references: [id])
-  list     List    @relation(fields: [listId], references: [id])
-  userId   String
-  listId   String
-  accepted Boolean @default(false)
+  user   User   @relation(fields: [userId], references: [id])
+  list   List   @relation(fields: [listId], references: [id])
+  userId String
+  listId String
 
   @@id([userId, listId])
 }

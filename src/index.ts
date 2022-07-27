@@ -10,6 +10,10 @@ import AddItemToListRoute from "./routes/addItemToList";
 import RemoveItemFromListRoute from "./routes/removeItemFromList";
 import InviteUserToListRoute from "./routes/inviteUserToList";
 import LogoutRoute from "./routes/logout";
+import HealthRoute from "./routes/health";
+import GetAllInvitesRoute from "./routes/getAllInvites";
+import SettingsRoute from "./routes/settings";
+import AcceptInviteRoute from "./routes/acceptInvite";
 
 const app = Express();
 const WEB_URL = process.env.WEB_URL as string;
@@ -34,6 +38,10 @@ app.use(AddItemToListRoute);
 app.use(RemoveItemFromListRoute);
 app.use(InviteUserToListRoute);
 app.use(LogoutRoute);
+app.use(HealthRoute);
+app.use(GetAllInvitesRoute);
+app.use(SettingsRoute);
+app.use(AcceptInviteRoute);
 
 app.listen(3003, () => {
   console.log("Server started on port 3003");
