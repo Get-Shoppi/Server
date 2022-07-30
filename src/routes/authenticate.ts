@@ -3,7 +3,8 @@ import { Router } from "express";
 import { generateJWT } from "../utils/authUtil";
 import { rateLimitMiddleware } from "../utils/rateLimitUtil";
 
-const TOKEN_EXPIRATION = 1000 * 60 * 60 * 24 * 30; // 30 days
+const TOKEN_EXPIRATION = 1000 * 60 * 30; // 30 minutes
+const JWT_EXPIRATION = 1000 * 60 * 60 * 24 * 30; // 30 days
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -39,10 +40,7 @@ router.post("/v1/authenticate", rateLimitMiddleware, async (req, res) => {
   return res
     .cookie("Authorization", `${jwt}`, {
       httpOnly: true,
-      expires: new Date(Date.now() + TOKEN_EXPIRATION),
-      domain: process.env.WEB_URL as string,
-      sameSite: "strict",
-      path: "/", // allow all paths
+      expires: new Date(Date.now() + JWT_EXPIRATION),
     })
     .sendStatus(200);
 });
