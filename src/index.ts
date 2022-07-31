@@ -14,14 +14,18 @@ import HealthRoute from "./routes/health";
 import GetAllInvitesRoute from "./routes/getAllInvites";
 import SettingsRoute from "./routes/settings";
 import AcceptInviteRoute from "./routes/acceptInvite";
+import GetAllInvitesFromListRoute from "./routes/getAllInvitesFromList";
+import DeleteInviteFromListRoute from "./routes/deleteInviteFromList";
+import DeclineInviteRoute from "./routes/declineInvite";
 
 const app = Express();
 const WEB_URL = process.env.WEB_URL as string;
+const NODE_ENV = process.env.NODE_ENV as string;
 app.use(
   cors.default({
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-    origin: WEB_URL,
+    origin: NODE_ENV === "DEV" ? "http://localhost:3000" : WEB_URL,
     methods: ["GET", "POST"],
   })
 );
@@ -42,12 +46,15 @@ app.use(HealthRoute);
 app.use(GetAllInvitesRoute);
 app.use(SettingsRoute);
 app.use(AcceptInviteRoute);
+app.use(GetAllInvitesFromListRoute);
+app.use(DeleteInviteFromListRoute);
+app.use(DeclineInviteRoute);
 
 app.listen(3003, () => {
   console.log("Server started on port 3003");
   if (process.env.NODE_ENV === "DEV") {
     console.warn("====================== WARNING ======================");
-    console.warn("Running in DEV mode, rate limits are not secure.");
+    console.warn("Running in DEV mode, instance is not secure.");
     console.warn("====================== WARNING ======================");
   }
 });
